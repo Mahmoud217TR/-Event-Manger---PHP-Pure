@@ -1,0 +1,87 @@
+// header('Content-Type: application/json');
+
+// // Handle different API requests
+// $requestMethod = $_SERVER['REQUEST_METHOD'];
+// $endpoint = explode('/', trim($_GET['q'], '/'))[0];  // For route handling
+
+// switch ($requestMethod) {
+//     case 'GET':
+//         if ($endpoint == 'events') {
+//             getEvents();
+//         }
+//         break;
+//     case 'POST':
+//         if ($endpoint == 'events') {
+//             addEvent();
+//         }
+//         break;
+//     case 'PUT':
+//         if ($endpoint == 'events') {
+//             updateEvent();
+//         }
+//         break;
+//     case 'DELETE':
+//         if ($endpoint == 'events') {
+//             deleteEvent();
+//         }
+//         break;
+//     default:
+//         http_response_code(405);
+//         echo json_encode(['error' => 'Method Not Allowed']);
+//         break;
+// }
+
+// // Function to get all events
+// function getEvents() {
+//     echo json_encode(Event::all());
+// }
+
+// // Function to add a new event
+// function addEvent() {
+//     $data = json_decode(file_get_contents('php://input'), true);
+//     $name = $data['name'];
+//     $date = $data['date'];
+//     $location_id = $data['location_id'];
+
+//     // Check capacity before adding the event
+//     $capacityStmt = $pdo->prepare("SELECT capacity FROM locations WHERE id = ?");
+//     $capacityStmt->execute([$location_id]);
+//     $capacity = $capacityStmt->fetchColumn();
+
+//     $participantsStmt = $pdo->prepare("SELECT COUNT(*) FROM event_participants WHERE event_id = ?");
+//     $participantsStmt->execute([$location_id]);
+//     $participants = $participantsStmt->fetchColumn();
+
+//     if ($participants < $capacity) {
+//         $stmt = $pdo->prepare("INSERT INTO events (name, date, location_id) VALUES (?, ?, ?)");
+//         $stmt->execute([$name, $date, $location_id]);
+//         http_response_code(201);
+//         echo json_encode(['message' => 'Event created']);
+//     } else {
+//         http_response_code(400);
+//         echo json_encode(['error' => 'Venue is full']);
+//     }
+// }
+
+// // Function to update an event
+// function updateEvent() {
+//     global $pdo;
+//     $id = explode('/', trim($_GET['q'], '/'))[1];
+//     $data = json_decode(file_get_contents('php://input'), true);
+//     $name = $data['name'];
+//     $date = $data['date'];
+//     $location_id = $data['location_id'];
+
+//     $stmt = $pdo->prepare("UPDATE events SET name = ?, date = ?, location_id = ? WHERE id = ?");
+//     $stmt->execute([$name, $date, $location_id, $id]);
+//     echo json_encode(['message' => 'Event updated']);
+// }
+
+// // Function to delete an event
+// function deleteEvent() {
+//     global $pdo;
+//     $id = explode('/', trim($_GET['q'], '/'))[1];
+//     $stmt = $pdo->prepare("DELETE FROM events WHERE id = ?");
+//     $stmt->execute([$id]);
+//     echo json_encode(['message' => 'Event deleted']);
+// }
