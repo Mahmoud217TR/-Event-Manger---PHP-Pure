@@ -12,7 +12,7 @@ CREATE TABLE locations (
     address VARCHAR(255) NOT NULL,
     capacity INT NOT NULL,
     created_at TIMESTAMP DEFAULT CURRENT_TIMESTAMP
-) ENGINE=MyISAM CHARSET=utf8mb4;
+) ENGINE=MyISAM CHARSET=utf8mb4 COLLATE=utf8mb4_general_ci;
 
 -- Create the 'events' table with a foreign key to 'locations'
 CREATE TABLE events (
@@ -22,7 +22,7 @@ CREATE TABLE events (
     location_id INT NOT NULL,
     created_at TIMESTAMP DEFAULT CURRENT_TIMESTAMP,
     FOREIGN KEY (location_id) REFERENCES locations(id) ON DELETE CASCADE
-) ENGINE=MyISAM CHARSET=utf8mb4;
+) ENGINE=MyISAM CHARSET=utf8mb4 COLLATE=utf8mb4_general_ci;
 
 -- Create the 'participants' table
 CREATE TABLE participants (
@@ -30,7 +30,7 @@ CREATE TABLE participants (
     name VARCHAR(100) NOT NULL,
     email VARCHAR(255) NOT NULL,
     created_at TIMESTAMP DEFAULT CURRENT_TIMESTAMP
-) ENGINE=MyISAM CHARSET=utf8mb4;
+) ENGINE=MyISAM CHARSET=utf8mb4 COLLATE=utf8mb4_general_ci;
 
 -- Create the 'event_participants' pivot table
 CREATE TABLE event_participants (
@@ -41,7 +41,7 @@ CREATE TABLE event_participants (
     CONSTRAINT unique_event_participant UNIQUE (event_id, participant_id),
     FOREIGN KEY (event_id) REFERENCES events(id) ON DELETE CASCADE,
     FOREIGN KEY (participant_id) REFERENCES participants(id) ON DELETE CASCADE
-) ENGINE=MyISAM CHARSET=utf8mb4;
+) ENGINE=MyISAM CHARSET=utf8mb4 COLLATE=utf8mb4_general_ci;
 
 -- Create the 'ips' table to store both blacklisted and whitelisted IPs
 CREATE TABLE ips (
@@ -50,4 +50,4 @@ CREATE TABLE ips (
     blacklisted BOOLEAN DEFAULT 0,
     created_at TIMESTAMP DEFAULT CURRENT_TIMESTAMP,
     CONSTRAINT unique_ip UNIQUE (ip_address)
-) ENGINE=MyISAM CHARSET=utf8mb4;
+) ENGINE=MyISAM CHARSET=utf8mb4 COLLATE=utf8mb4_general_ci;
