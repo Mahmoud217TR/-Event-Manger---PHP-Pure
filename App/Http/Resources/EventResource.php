@@ -25,6 +25,7 @@ class EventResource extends Resource
             'location' => $this->has('location') ? LocationResource::make($resource->location()) : null,
             'participants' => $this->has('participants') ? ParticipantResource::make($resource->participants()) : null,
             'visitors' => $this->has('visitors') ? $resource->getEventParticipantsCount() : null,
+            'capacity_rate' => $this->has('capacity_rate') ? $resource->getCapacityRate() : null,
         ];
     }
 

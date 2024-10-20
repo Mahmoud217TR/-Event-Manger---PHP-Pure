@@ -74,7 +74,6 @@ class Response
      * Send a JSON response
      *
      * @param array|object $data
-     * @param int $statusCode
      * @return void
      */
     public function json(array|object $data = null)
@@ -87,6 +86,20 @@ class Response
         http_response_code($this->statusCode);
         header('Content-Type: application/json');
         echo json_encode($data);
+        exit;
+    }
+
+    /**
+     * Render a View
+     * 
+     * @param string $view
+     * @param array|null $data
+     * @return void
+     */
+    public function view(string $view, array $data = [])
+    {
+        extract($data);
+        require_once __DIR__ . '/../../views/' . $view . '.php';
         exit;
     }
 

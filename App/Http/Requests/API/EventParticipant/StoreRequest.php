@@ -43,7 +43,7 @@ class StoreRequest extends APIFormRequest
                 EventParticipant::class,
                 "WHERE event_id = ?",
                 [$data['event_id']],
-                fn($count) => $count+1 < $capacity,
+                fn($count) => $count+1 <= $capacity,
                 "The event reached it's maximum capacity"
             );
     }

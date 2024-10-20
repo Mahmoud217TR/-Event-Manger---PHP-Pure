@@ -11,7 +11,9 @@ abstract class DatabaseBaseRepository implements EntityRepository
 
     public function get(array $conditions = []): array
     {
-        return $this->class()::query($conditions[0], $conditions[1]);
+        $query = isset($conditions[0]) ? $conditions[0] : '';
+        $values = isset($conditions[1]) ? $conditions[1] : [];
+        return $this->class()::query($query, $values);
     }
 
     public function find(int $id): ?Entity

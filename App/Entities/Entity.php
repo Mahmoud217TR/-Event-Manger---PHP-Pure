@@ -273,7 +273,7 @@ abstract class Entity implements JsonSerializable
     {
         $query = "INSERT INTO ".static::getTableName()." (";
         
-        $options['created_at'] = (new DateTime())->format('Y-m-d');
+        $options['created_at'] = (new DateTime())->format('Y-m-d H:i:s');
 
         foreach ($options as $key => $value) {
             $query .= "{$key}, ";    

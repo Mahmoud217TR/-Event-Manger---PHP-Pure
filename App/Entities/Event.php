@@ -75,6 +75,16 @@ class Event extends Entity
         return count($this->participants());
     }
 
+    public function getCapacityRate(): float
+    {
+        return $this->getParticipantsCount() * 100 / $this->getCapacity();
+    }
+
+    public function getCapacityRatePercentage(): string
+    {
+        return ceil($this->getParticipantsCount() * 100 / $this->getCapacity())."%";
+    }
+
     public function getEventParticipantsCount(): int
     {
         return EventParticipant::count("WHERE event_id = ?", [$this->id]);
