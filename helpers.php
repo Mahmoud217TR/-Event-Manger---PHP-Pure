@@ -1,7 +1,7 @@
 <?php
 
-use Http\Request;
-use Http\Response;
+use App\Http\Request;
+use App\Http\Response;
 
 if (!function_exists('response')) {
     /**

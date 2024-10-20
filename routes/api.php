@@ -1,11 +1,11 @@
 <?php
 
-use Http\Controllers\API\EventController;
-use Http\Controllers\API\EventParticipantController;
-use Http\Controllers\API\IPController;
-use Http\Controllers\API\LocationController;
-use Http\Controllers\API\ParticipantController;
-use Http\Middleware\DynamicAPIServiceMiddleware;
+use App\Http\Controllers\API\EventController;
+use App\Http\Controllers\API\EventParticipantController;
+use App\Http\Controllers\API\IPController;
+use App\Http\Controllers\API\LocationController;
+use App\Http\Controllers\API\ParticipantController;
+use App\Http\Middleware\DynamicAPIServiceMiddleware;
 
 /**
  * API middleware are defined here.
