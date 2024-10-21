@@ -294,8 +294,61 @@ h1, h2, h3, h4, h5, h6 {
     text-align: end;
 }
 
+
+.w-max-min {
+    max-width: min-content;
+}
+
+.w-min-max {
+    min-width: max-content;
+}
+
+.w-2 {
+    width: 1rem;
+}
+
+.w-3 {
+    width: 1.5rem;
+}
+
+.w-4 {
+    width: 2rem;
+}
+
+.w-40\% {
+    width: 40%;
+}
+
+.w-70\% {
+    width: 70%;
+}
+
+.w-90\% {
+    width: 90%;
+}
+
+.min-w-lg {
+    min-width: 992px;
+}
+
+.min-w-full-view {
+    min-width: 100vw;
+}
+
 .h-full {
     height: 100%;
+}
+
+.h-2 {
+    height: 1rem;
+}
+
+.h-3 {
+    height: 1.5rem;
+}
+
+.h-4 {
+    height: 2rem;
 }
 
 .w-full {
@@ -306,10 +359,6 @@ h1, h2, h3, h4, h5, h6 {
     min-height: 100vh;
 }
 
-.min-w-full-view {
-    min-width: 100vw;
-}
-
 .flex {
     display: flex;
 }
@@ -318,8 +367,24 @@ h1, h2, h3, h4, h5, h6 {
     justify-content: center;
 }
 
+.justify-evenly {
+    justify-content: space-evenly;
+}
+
+.justify-between {
+    justify-content: space-between;
+}
+
+.justify-around {
+    justify-content: space-around;
+}
+
 .items-center {
     align-items: center;
+}
+
+.invisible {
+    visibility: hidden;
 }
 
 .my-4 {
@@ -375,46 +440,6 @@ h1, h2, h3, h4, h5, h6 {
 
 .rounded-lg {
     border-radius: 2rem;
-}
-
-.w-max-min {
-    max-width: min-content;
-}
-
-.w-min-max {
-    min-width: max-content;
-}
-
-.w-2 {
-    width: 1rem;
-}
-
-.w-3 {
-    width: 1.5rem;
-}
-
-.w-4 {
-    width: 2rem;
-}
-
-.w-40\% {
-    width: 40%;
-}
-
-.w-70\% {
-    width: 70%;
-}
-
-.h-2 {
-    height: 1rem;
-}
-
-.h-3 {
-    height: 1.5rem;
-}
-
-.h-4 {
-    height: 2rem;
 }
 
 .border-solid {
@@ -544,4 +569,14 @@ h1, h2, h3, h4, h5, h6 {
 .transiton {
     transition: all;
     transition-duration: 300ms;
+}
+
+.overflow-x-auto {
+    overflow-x: auto;
+}
+
+@media screen and (min-width: 768px) {
+    .md\:w-70\% {
+        width: 70%;
+    }
 }

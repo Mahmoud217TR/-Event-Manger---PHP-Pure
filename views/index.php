@@ -15,11 +15,11 @@
             Management System
         </h1>
 
-        <div class="rounded-sm p-4 bg-navy w-70% mx-auto my-10">
+        <div class="rounded-sm p-4 bg-navy w-90% md:w-70% mx-auto my-10 overflow-x-auto">
             <h2 class="text-2xl text-white text-start mb-4">
                 Events Overview
             </h2>
-            <table class="w-full border-collapse rounded-sm">
+            <table class="w-full border-collapse rounded-sm min-w-max">
                 <thead> 
                     <tr class="bg-white text-navy">
                         <th class="p-2">Event</th>
@@ -35,15 +35,20 @@
                                 <td class="border-b border-t-0 border-s-0 border-e-0 border-white border-solid border-collapse p-2 text-center">
                                     <?= htmlspecialchars($event->name) ?>
                                 </td>
-                                <td class="border-b border-t-0 border-s-0 border-e-0 border-white border-solid border-collapse p-2 text-center text-lg relative">
-                                    <?= htmlspecialchars($event->getCapacityRatePercentage()) ?>
-                                    <?php if ($event->getCapacityRate() >= 80): ?>
-                                        <svg fill="currentColor" class="text-red w-3 h-3 absolute top-1/2 end-1/4 translate-middle" version="1.1" id="Capa_1" xmlns="http://www.w3.org/2000/svg" xmlns:xlink="http://www.w3.org/1999/xlink"  width="800px" height="800px" viewBox="0 0 478.125 478.125" xml:space="preserve">
+                                <td class="border-b border-t-0 border-s-0 border-e-0 border-white border-solid border-collapse p-2 text-center text-lg">
+                                    <div class="flex items-center justify-around">
+                                        <span class="invisible"></span>
+                                        
+                                        <span>
+                                            <?= htmlspecialchars($event->getCapacityRatePercentage()) ?>
+                                        </span>
+                                        
+                                        <svg fill="currentColor" class="text-red w-3 h-3 <?php if ($event->getCapacityRate() < 80): ?> invisible <?php endif; ?>" version="1.1" id="Capa_1" xmlns="http://www.w3.org/2000/svg" xmlns:xlink="http://www.w3.org/1999/xlink"  width="800px" height="800px" viewBox="0 0 478.125 478.125" xml:space="preserve">
                                             <circle cx="239.904" cy="314.721" r="35.878"/>
                                             <path d="M256.657,127.525h-31.9c-10.557,0-19.125,8.645-19.125,19.125v101.975c0,10.48,8.645,19.125,19.125,19.125h31.9 c10.48,0,19.125-8.645,19.125-19.125V146.65C275.782,136.17,267.138,127.525,256.657,127.525z"/>
                                             <path d="M239.062,0C106.947,0,0,106.947,0,239.062s106.947,239.062,239.062,239.062c132.115,0,239.062-106.947,239.062-239.062 S371.178,0,239.062,0z M239.292,409.734c-94.171,0-170.595-76.348-170.595-170.596c0-94.248,76.347-170.595,170.595-170.595 s170.595,76.347,170.595,170.595C409.887,333.387,333.464,409.734,239.292,409.734z"/>
                                         </svg>
-                                    <?php endif; ?>
+                                    </div>
                                 </td>
                                 <td class="border-b border-t-0 border-s-0 border-e-0 border-white border-solid border-collapse p-2 text-center">
                                     <?= htmlspecialchars($event->getEventParticipantsCount()) ?> / <?= htmlspecialchars($event->getCapacity()) ?>
@@ -64,11 +69,11 @@
             </table>
         </div>
 
-        <div class="rounded-sm p-4 bg-navy w-70% mx-auto my-10">
+        <div class="rounded-sm p-4 bg-navy w-90% md:w-70% mx-auto my-10 overflow-x-auto">
             <h2 class="text-2xl text-white text-start mb-4">
                 API Blacklist
             </h2>
-            <table class="w-full border-collapse rounded-sm">
+            <table class="w-full border-collapse rounded-sm min-w-max">
                 <thead> 
                     <tr class="bg-white text-navy">
                         <th class="p-2">IP Addres</th>
