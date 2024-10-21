@@ -12,15 +12,47 @@ abstract class Entity implements JsonSerializable
     public int $id;
     protected static array $joins = [];
     
+    /**
+     * Creates and returns an entity instance from a database record.
+     * 
+     * @param array $record An associative array representing a database record.
+     * 
+     * @return static The entity instance created from the given record.
+     */
     public abstract static function fromRecord(array $record): static;
+
+    /**
+     * Returns the name of the database table associated with the entity.
+     * 
+     * @return string The table name for the entity.
+     */
     public abstract static function getTableName(): string;
+
+    /**
+     * Converts the current entity instance to an associative array.
+     * 
+     * @return array An array representation of the entity instance, typically used for serialization or output.
+     */
     public abstract function toArray(): array;
 
+    /**
+     * Retrieves all records from the database table for the entity.
+     * 
+     * @return array An array of entity instances representing all records in the table.
+     */
     public static function all(): array
     {
         return static::where([]);
     }
 
+    /**
+     * Retrieves records from the database based on specified conditions.
+     * 
+     * @param array $conditions An associative array of conditions where the key is the column and the value is the condition.
+     * @param string $operator Logical operator to combine conditions (default is 'AND').
+     * 
+     * @return array An array of entity instances that match the specified conditions.
+     */
     public static function where(array $conditions = [], string $operator = 'AND'): array
     {
         $query = "SELECT * FROM ".static::getTableName();
@@ -45,6 +77,14 @@ abstract class Entity implements JsonSerializable
         return static::coerce($records);
     }
 
+    /**
+     * Counts the number of records in the database based on a given condition.
+     * 
+     * @param string $whereQuery An optional WHERE clause for filtering records.
+     * @param array $values Values to be bound to the query.
+     * 
+     * @return int The count of records matching the condition.
+     */
     public static function count(string $whereQuery = '', array $values = []): int
     {
         return static::query(
@@ -56,6 +96,17 @@ abstract class Entity implements JsonSerializable
         );
     }
 
+    /**
+     * Executes a custom query and returns the result.
+     * 
+     * @param string $whereQuery Optional WHERE clause or any additional SQL query parts.
+     * @param array $values Values to be bound to the query.
+     * @param string $select The SELECT clause (default is "SELECT * FROM").
+     * @param int $fetch The fetch style for the PDO statement (default is PDO::FETCH_NAMED).
+     * @param Closure|null $resolve An optional closure to handle the result set before returning.
+     * 
+     * @return mixed The result of the query, either an array of entities or a processed result if a closure is provided.
+     */
     public static function query(
         string $whereQuery,
         array $values = [],
@@ -86,6 +137,13 @@ abstract class Entity implements JsonSerializable
         return static::coerce($records);
     }
 
+    /**
+     * Converts database records into entity instances.
+     * 
+     * @param array $records An array of database records to convert.
+     * 
+     * @return array An array of entity instances based on the given records.
+     */
     public static function coerce($records): array
     {
         $entities = [];
@@ -97,6 +155,13 @@ abstract class Entity implements JsonSerializable
         return $entities;
     }
 
+    /**
+     * Eager loads related entities for the current entity by specifying relationships.
+     * 
+     * @param array $relateds An array of relationships to load.
+     * 
+     * @return void
+     */
     public static function with(array $relateds): void
     {
         foreach ($relateds as $related) {
@@ -104,11 +169,27 @@ abstract class Entity implements JsonSerializable
         }
     }
 
+    /**
+     * Finds a record by its primary key.
+     * 
+     * @param mixed $id The primary key value.
+     * 
+     * @return ?static The entity instance if found, or null if not.
+     */
     public static function find(mixed $id): ?static
     {
         return static::findBy($id);
     }
 
+    /**
+     * Finds a record by a specified column and value.
+     * 
+     * @param mixed $value The value to search for.
+     * @param string $column The column to search in (default is 'id').
+     * @param string $operator The comparison operator (default is '=').
+     * 
+     * @return ?static The entity instance if found, or null if not.
+     */
     public static function findBy(mixed $value, string $column = 'id', string $operator = '='): ?static
     {
         $results = static::query("WHERE {$column} {$operator} ?", [$value]);
@@ -220,7 +301,6 @@ abstract class Entity implements JsonSerializable
         return $relatedEntities;
     }
 
-
     /**
      * Create a relationship: belongsToMany.
      * 
@@ -268,7 +348,13 @@ abstract class Entity implements JsonSerializable
         return $relatedEntities;
     }
 
-
+    /**
+     * Creates a new record in the database and returns the corresponding entity instance.
+     * 
+     * @param array $options An associative array of column names and values for the new record.
+     * 
+     * @return static The newly created entity instance.
+     */
     public static function create(array $options): static
     {
         $query = "INSERT INTO ".static::getTableName()." (";
@@ -293,6 +379,13 @@ abstract class Entity implements JsonSerializable
         ));
     }
 
+    /**
+     * Updates the current entity's record in the database with new values.
+     * 
+     * @param array $options An associative array of column names and values to update.
+     * 
+     * @return true Returns true if the update is successful.
+     */
     public function update(array $options): true
     {
         $query = "UPDATE ".static::getTableName()." SET ";
@@ -313,6 +406,11 @@ abstract class Entity implements JsonSerializable
         return true;
     }
 
+    /**
+     * Deletes the current entity's record from the database.
+     * 
+     * @return bool True if the deletion is successful, false otherwise.
+     */
     public function delete(): bool
     {
         if (isset($this->id)) {
@@ -324,16 +422,41 @@ abstract class Entity implements JsonSerializable
         return true;
     }
 
+    /**
+     * Serializes the entity to a JSON-compatible format.
+     * 
+     * @return mixed A JSON-serializable representation of the entity, with null values removed.
+     */
     public function jsonSerialize(): mixed
     {
         return array_filter($this->toArray(), fn($value) => !is_null($value));   
     }
 
+    /**
+     * Adds placeholders for SQL query variables.
+     * 
+     * @param string $count The number of placeholders to add.
+     * @param string $variable The placeholder format, default is "?, ". 
+     *                         Each placeholder is separated by a comma and space.
+     * 
+     * @return string A string of placeholders (e.g., "?, ?, ?, " for a count of 3).
+     */
     protected static function addVariables(string $count, string $variable = "?, "): string
     {
         return rtrim(str_repeat($variable, $count), ", ");
     }
 
+    /**
+     * Builds a SQL condition string from an associative array of conditions.
+     * 
+     * @param array $conditions An associative array where the key is the column name and the value is the condition.
+     *              If the value is an array, the first element should be the operator (e.g., '=', '>', etc.)
+     *              and the second element should be the value for the condition.
+     * @param string $operator The logical operator (e.g., 'AND', 'OR') used to combine conditions.
+     * @param array &$values This array will be populated with the values that correspond to the conditions.
+     * 
+     * @return string The constructed SQL condition string.
+     */
     protected static function buildConditions(array $conditions, string $operator, array &$values): string
     {
         $queryParts = [];

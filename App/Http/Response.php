@@ -133,10 +133,29 @@ class Response
         exit;
     }
 
+    /**
+     * Create a response indicating that the requested resource was not found (404).
+     * 
+     * @param string $message Custom message to include in the response. Default is 'Item Not Found'.
+     * @return Response Returns a new instance of the Response class with a 404 status code and the provided message.
+     */
     public static function notFound(string $message = 'Item Not Found')
     {
         return static::make()
             ->code(404)
+            ->message($message);
+    }
+
+    /**
+     * Create a response indicating that the request is forbidden (403).
+     * 
+     * @param string $message Custom message to include in the response. Default is 'Unauthorized'.
+     * @return Response Returns a new instance of the Response class with a 403 status code and the provided message.
+     */
+    public static function forbidden(string $message = 'Unauthorized')
+    {
+        return static::make()
+            ->code(403)
             ->message($message);
     }
 }

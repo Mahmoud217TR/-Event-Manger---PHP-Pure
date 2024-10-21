@@ -16,17 +16,45 @@ abstract class Resource implements JsonSerializable
         $this->resource = $resource;
     }
 
+    /**
+     * Static factory method to create a new Resource instance.
+     * 
+     * This method creates a new instance of the Resource class, initializing it with the provided
+     * resource, which can either be a single Entity or an array of Entity objects.
+     * 
+     * @param array|Entity $resource The resource or resources to be wrapped by the Resource class.
+     * @return static A new instance of the Resource class.
+     */
     public static function make(array|Entity $resource): static
     {
         return new static($resource);
     }
 
+
+    /**
+     * Add additional data to be included with the resource response.
+     * 
+     * This method sets additional data (specified by the `$with` array) that will be included
+     * with the resource when it's serialized or converted to an array.
+     * 
+     * @param array $with An array of keys specifying additional data to include with the resource.
+     * @return static The current instance of the Resource class, allowing for method chaining.
+     */
     public function with(array $with): static
     {
         $this->with = $with;
         return $this;
     }
 
+    /**
+     * Check if a specific key exists in the additional data to be included.
+     * 
+     * This method checks whether a particular key exists in the `$with` array, which contains
+     * additional data that is to be included with the resource when it's transformed.
+     * 
+     * @param string $key The key to check for in the additional data.
+     * @return bool Returns `true` if the key exists in the `$with` array, `false` otherwise.
+     */
     public function has(string $key): bool
     {
         return in_array($key, $this->with);

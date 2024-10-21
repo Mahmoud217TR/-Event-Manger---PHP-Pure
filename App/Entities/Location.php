@@ -42,6 +42,14 @@ class Location extends Entity
         return 'locations';
     }
 
+    /**
+     * Retrieves the events associated with the location.
+     * 
+     * This method establishes a one-to-many relationship between the location and the events
+     * that take place at the location. It will return an array of Event entities.
+     * 
+     * @return array An array of Event entities related to this location.
+     */
     public function events(): array
     {
         if (is_null($this->events)) {

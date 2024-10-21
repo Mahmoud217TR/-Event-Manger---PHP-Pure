@@ -28,18 +28,14 @@ class DynamicAPIServiceMiddleware extends Middleware
         if (request()->getClientIp() != '127.0.0.1') {
             if ($this->isBlacklisted()) {
                 response()
-                    ->code(403)
-                    ->json([
-                        'error' => 'Your IP has been blacklisted.',
-                    ]);
+                    ->forbidden('Your IP has been blacklisted.')
+                    ->json();
             }
     
             if (!$this->isWhitelisted()) {
                 response()
-                    ->code(403)
-                    ->json([
-                        'error' => 'Your IP is not authorized',
-                    ]);
+                    ->forbidden('Your IP is not authorized')
+                    ->json();
             }
         }
 

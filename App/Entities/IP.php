@@ -37,11 +37,21 @@ class IP extends Entity
         return 'ips';
     }
 
+    /**
+     * Checks if the IP is blacklisted.
+     * 
+     * @return bool True if the IP is blacklisted, false otherwise.
+     */
     public function isBlacklisted(): bool
     {
         return $this->blacklisted;
     }
 
+    /**
+    * Checks if the IP is whitelisted.
+    * 
+    * @return bool True if the IP is whitelisted, false otherwise (i.e., not blacklisted).
+    */
     public function isWhitelisted(): bool
     {
         return !$this->blacklisted;

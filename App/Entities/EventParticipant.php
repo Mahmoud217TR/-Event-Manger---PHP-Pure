@@ -39,6 +39,13 @@ class EventParticipant extends Entity
         return 'event_participants';
     }
 
+    /**
+     * Retrieves the associated Event entity for the event participant.
+     * 
+     * Uses a belongs-to relationship between EventParticipant and Event.
+     * 
+     * @return ?Event The related Event entity or null if not found.
+     */
     public function event(): ?Event
     {
         if (is_null($this->event)) {
@@ -47,6 +54,13 @@ class EventParticipant extends Entity
         return $this->event;
     }
 
+    /**
+     * Retrieves the associated Participant entity for the event participant.
+     * 
+     * Uses a belongs-to relationship between EventParticipant and Participant.
+     * 
+     * @return ?Participant The related Participant entity or null if not found.
+     */
     public function participant(): ?Participant
     {
         if (is_null($this->participant)) {

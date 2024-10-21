@@ -38,6 +38,14 @@ class Participant extends Entity
         return 'participants';
     }
 
+    /**
+     * Retrieves the events associated with the participant.
+     * 
+     * This method establishes a many-to-many relationship between the participant and the events
+     * they are part of. It will return an array of Event entities.
+     * 
+     * @return array An array of Event entities associated with the participant.
+     */
     public function events(): array
     {
         if (is_null($this->events)) {

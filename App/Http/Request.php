@@ -91,21 +91,54 @@ class Request
         return new Validator($this->data);
     }
 
+    /**
+     * Add a route parameter to the request.
+     * 
+     * @param string $key The name of the parameter (e.g., 'id').
+     * @param mixed $value The value of the parameter (e.g., '123').
+     * @return void
+     */
     public function addParam(string $key, mixed $value): void
     {
         $this->params[$key] = $value;
     }
 
+
+    /**
+     * Retrieve all route parameters.
+     * 
+     * This method returns an array of all parameters that were extracted from the URL
+     * (e.g., from a route like `events/:id`).
+     * 
+     * @return array An associative array of parameters (e.g., ['id' => 123]).
+     */
     public function getParams(): array
     {
         return $this->params;
     }
 
+    /**
+     * Check if a specific route parameter exists.
+     * 
+     * This method checks if a given key is present in the parameters array, which contains
+     * 
+     * @param string $key The parameter key to check (e.g., 'id').
+     * @return bool Returns `true` if the parameter exists, `false` otherwise.
+     */
     public function hasParam(string $key): bool
     {
         return isset($this->params[$key]);
     }
 
+    /**
+     * Retrieve a specific route parameter.
+     * 
+     * This method retrieves the value of a particular parameter (such as 'id') from the `$params` array,
+     * which contains values extracted from the URL. If the parameter does not exist, it returns `null`.
+     * 
+     * @param string $key The name of the parameter to retrieve (e.g., 'id').
+     * @return mixed The value of the parameter, or `null` if not found.
+     */
     public function getParam(string $key): mixed
     {
         return $this->hasParam($key) ? $this->params[$key] : null;
